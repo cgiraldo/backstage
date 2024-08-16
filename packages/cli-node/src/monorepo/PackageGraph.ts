@@ -23,6 +23,34 @@ import { Lockfile } from './Lockfile';
 import { JsonValue } from '@backstage/types';
 
 /**
+ *
+ */
+export type BackstagePackageExports = {
+  // If omitted then it is the default package export
+  entryPoint?: string;
+  // more information related to the export
+  /**
+   * Guide
+   * 
+   *  type: 'plugin' | ...
+      pluginId: string
+      entryPoint?: string
+      routes: string[]
+      externalRoutes: string[]
+      extensions: Array<{
+        id: string
+        attachTo: { id: string, input: string }
+        disabled: boolean
+        config: {
+          schema: JsonObject
+        }
+        inputs: Record<string, ...>
+        output: string[]
+      }>
+   */
+};
+
+/**
  * Known fields in Backstage package.json files.
  *
  * @public
@@ -61,6 +89,11 @@ export interface BackstagePackageJson {
      * All packages that are part of the plugin. Must always and only be set for plugin packages and plugin library packages.
      */
     pluginPackages?: string[];
+
+    /**
+     * TODO
+     */
+    exports?: BackstagePackageExports;
   };
 
   exports?: JsonValue;

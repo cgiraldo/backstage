@@ -426,6 +426,28 @@ export function fixPluginPackages(
   }
 }
 
+export function fixPluginEntryPoints(pkg: FixablePackage) {
+  const pkgBackstage = pkg.packageJson.backstage;
+  const role = pkg.packageJson.backstage?.role;
+  const exports = pkg.packageJson.exports;
+
+  if (!role || !exports) {
+    return;
+  }
+
+  if (
+    role !== 'backend' &&
+    role !== 'backend-plugin-module' &&
+    role !== 'frontend' &&
+    role !== 'frontend-plugin-module'
+  ) {
+    return;
+  }
+
+  // For each of the defined export locations, we want to return
+  // information on the default export.
+}
+
 type PackageFixer = (pkg: FixablePackage, packages: FixablePackage[]) => void;
 
 export async function command(opts: OptionValues): Promise<void> {
@@ -440,6 +462,7 @@ export async function command(opts: OptionValues): Promise<void> {
       fixRepositoryField,
       fixPluginId,
       fixPluginPackages,
+      fixPluginEntryPoints,
       // Run the publish preflight check too, to make sure we don't uncover errors during publishing
       publishPreflightCheck,
     );
