@@ -24,8 +24,12 @@ import {
 import { OptionValues } from 'commander';
 import fs from 'fs-extra';
 import { resolve as resolvePath, posix, relative as relativePath } from 'path';
+import { z } from 'zod';
 import { paths } from '../../lib/paths';
 import { publishPreflightCheck } from '../../lib/publishing';
+import { getExportsMetadata } from '../../lib/exports';
+import { findPaths } from '@backstage/cli-common';
+import { Project } from 'ts-morph';
 
 /**
  * A mutable object representing a package.json file with potential fixes.
@@ -426,29 +430,50 @@ export function fixPluginPackages(
   }
 }
 
-export function fixPluginEntryPoints(pkg: FixablePackage) {
-  const pkgBackstage = pkg.packageJson.backstage;
-  const role = pkg.packageJson.backstage?.role;
-  const exports = pkg.packageJson.exports;
-
-  if (!role || !exports) {
-    return;
-  }
-
+// For each of the defined export locations, we want to annotate
+// the backstage field with the exports that are available. The
+// "exports" field in package.json is a mapping of import paths to file paths.
+//
+// While the exports field is really flexible, this function will enforce a
+// particular structure, which is a Record<string, string> where the key is the
+// import path and the value is the file path.
+export function fixPluginEntryPoints(
+  { dir, packageJson }: FixablePackage,
+  _packages: FixablePackage[],
+  project: Project,
+) {
   if (
-    role !== 'backend' &&
-    role !== 'backend-plugin-module' &&
-    role !== 'frontend' &&
-    role !== 'frontend-plugin-module'
+    !packageJson.backstage ||
+    !packageJson.backstage.role ||
+    !packageJson.exports
   ) {
     return;
   }
 
-  // For each of the defined export locations, we want to return
-  // information on the default export.
+  const exports = z
+    .record(z.string(), z.string())
+    .safeParse(packageJson.exports);
+
+  if (!exports.success) {
+    console.log(
+      `The exports field in ${packageJson.name} is not in the expected format of Record<string, string>. Skipping.`,
+    );
+    return;
+  }
+
+  const { role } = packageJson.backstage;
+  const exportMetadata = getExportsMetadata(project, role, dir, exports.data);
+
+  if (exportMetadata.length) {
+    packageJson.backstage.exports = exportMetadata;
+  }
 }
 
-type PackageFixer = (pkg: FixablePackage, packages: FixablePackage[]) => void;
+type PackageFixer = (
+  pkg: FixablePackage,
+  packages: FixablePackage[],
+  project: Project,
+) => void;
 
 export async function command(opts: OptionValues): Promise<void> {
   const packages = await readFixablePackages();
@@ -468,9 +493,14 @@ export async function command(opts: OptionValues): Promise<void> {
     );
   }
 
+  const workspaceRoot = findPaths(process.cwd()).targetRoot;
+  const project = new Project({
+    tsConfigFilePath: resolvePath(workspaceRoot, 'tsconfig.json'),
+  });
+
   for (const fixer of fixers) {
     for (const pkg of packages) {
-      fixer(pkg, packages);
+      fixer(pkg, packages, project);
     }
   }
 

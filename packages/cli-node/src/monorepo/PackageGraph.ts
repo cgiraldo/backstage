@@ -21,13 +21,44 @@ import { PackageRole } from '../roles';
 import { GitUtils } from '../git';
 import { Lockfile } from './Lockfile';
 import { JsonValue } from '@backstage/types';
+import { z } from 'zod';
+
+export const packageExportTypeSchema = z.enum([
+  '@backstage/BackendFeature',
+  '@backstage/BackendFeatureFactory',
+  '@backstage/BackstageCredentials',
+  '@backstage/BackstagePlugin',
+  '@backstage/Extension',
+  '@backstage/ExtensionDataRef',
+  '@backstage/ExtensionDataValue',
+  '@backstage/ExtensionDefinition',
+  '@backstage/ExtensionInput',
+  '@backstage/ExtensionOverrides',
+  '@backstage/ExtensionPoint',
+  '@backstage/ExternalRouteRef',
+  '@backstage/RouteRef',
+  '@backstage/ServiceRef',
+  '@backstage/SubRouteRef',
+  '@backstage/TranslationMessages',
+  '@backstage/TranslationRef',
+  '@backstage/TranslationResource',
+]);
+
+export type BackstagePackageExportType = z.infer<
+  typeof packageExportTypeSchema
+>;
 
 /**
  *
  */
-export type BackstagePackageExports = {
-  // If omitted then it is the default package export
-  entryPoint?: string;
+export type BackstagePackageExport = {
+  // The export path, if omitted then it is the default package export
+  path?: string;
+  // The name of the export, if omitted then it is the default export
+  name?: string;
+  // The type of the export
+  type: BackstagePackageExportType;
+
   // more information related to the export
   /**
    * Guide
@@ -93,7 +124,7 @@ export interface BackstagePackageJson {
     /**
      * TODO
      */
-    exports?: BackstagePackageExports;
+    exports?: BackstagePackageExport[];
   };
 
   exports?: JsonValue;

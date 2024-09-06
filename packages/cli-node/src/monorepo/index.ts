@@ -16,10 +16,13 @@
 
 export { isMonoRepo } from './isMonoRepo';
 export {
+  packageExportTypeSchema,
   PackageGraph,
   type PackageGraphNode,
   type BackstagePackage,
   type BackstagePackageJson,
+  type BackstagePackageExport,
+  type BackstagePackageExportType,
 } from './PackageGraph';
 export {
   Lockfile,
