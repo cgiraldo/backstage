@@ -27,6 +27,7 @@ import {
 } from './createExtensionDataContainer';
 import {
   AnyExtensionDataRef,
+  ExtensionDataRef,
   ExtensionDataValue,
 } from './createExtensionDataRef';
 import { ExtensionInput } from './createExtensionInput';
@@ -168,7 +169,7 @@ export type ExtensionDefinition<
     TExtensionConfigSchema extends {
       [key in string]: (zImpl: typeof z) => z.ZodType;
     },
-    UFactoryOutput extends ExtensionDataValue<any, any>,
+    UFactoryOutput extends ExtensionDataValue<unknown, string>,
     UNewOutput extends AnyExtensionDataRef,
     TExtraInputs extends {
       [inputName in string]: ExtensionInput<
@@ -211,7 +212,19 @@ export type ExtensionDefinition<
       AnyExtensionDataRef extends UNewOutput
         ? NonNullable<T['output']>
         : UNewOutput,
-      UFactoryOutput
+      ExtensionDataValue<unknown, string> extends UFactoryOutput
+        ? T['output'] extends infer IOutput extends AnyExtensionDataRef
+          ? IOutput extends ExtensionDataRef<
+              infer IData,
+              infer IId,
+              infer IConfig
+            >
+            ? IConfig['optional'] extends true
+              ? never
+              : ExtensionDataValue<IData, IId>
+            : never
+          : never
+        : UFactoryOutput
     >,
   ): ExtensionDefinition<{
     kind: T['kind'];

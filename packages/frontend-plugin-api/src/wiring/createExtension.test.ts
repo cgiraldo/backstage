@@ -583,22 +583,30 @@ describe('createExtension', () => {
 
       const override1 = testExtension.override({
         output: [numberDataRef],
+        factory: () => {
+          return [numberDataRef(1)];
+        },
+      });
+
+      // @ts-expect-error
+      const override2 = testExtension.override({
+        output: [numberDataRef],
+        factory() {
+          return [stringDataRef('1')];
+        },
+      });
+
+      // TODO(Rugvip): For some reason the factory parameters mess with type inference,
+      // this isn't supposed to be an error so if we can remove this @ts-expect-error, thats's good.
+      // @ts-expect-error
+      const override3 = testExtension.override({
+        output: [numberDataRef],
         factory(_, { inputs }) {
           return [numberDataRef(inputs.test.get(stringDataRef).length)];
         },
       });
 
-      // @ts-expect-error - this should fail because string output should be merged?
-      const override2 = testExtension.override({
-        output: [numberDataRef],
-        factory(_, { inputs }) {
-          return [stringDataRef(inputs.test.get(stringDataRef))];
-        },
-      });
-
-      unused(override1, override2);
-
-      expect(true).toBe(true);
+      expect([override1, override2, override3]).toBeDefined();
     });
 
     it('should allow overriding the factory function and calling the original factory', () => {
@@ -738,6 +746,39 @@ describe('createExtension', () => {
           .add(attached.override({ disabled: true }))
           .get(stringDataRef),
       ).toBe(undefined);
+    });
+
+    it('should complain when overriding with incompatible output', () => {
+      const subject = createExtension({
+        name: 'root',
+        attachTo: { id: 'ignored', input: 'ignored' },
+        output: [stringDataRef],
+        factory() {
+          return [stringDataRef('foo')];
+        },
+      });
+
+      // @ts-expect-error - factory produces a string, which doesn't match
+      subject.override({ output: [numberDataRef] });
+
+      // @ts-expect-error - existing factory still doesn't produce a number
+      subject.override({ output: [numberDataRef, stringDataRef] });
+
+      // This is fine, the factory produces a string and number is optional
+      subject.override({ output: [numberDataRef.optional(), stringDataRef] });
+
+      const subjectOpt = createExtension({
+        name: 'root',
+        attachTo: { id: 'ignored', input: 'ignored' },
+        output: [stringDataRef.optional()],
+        factory() {
+          return [stringDataRef('foo')];
+        },
+      });
+      // @ts-expect-error - existing factory still doesn't produce a number
+      subjectOpt.override({ output: [stringDataRef] });
+
+      expect(subjectOpt).toBeDefined();
     });
 
     it('should be able to override input values', () => {
