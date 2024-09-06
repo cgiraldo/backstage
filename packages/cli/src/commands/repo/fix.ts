@@ -452,7 +452,9 @@ export function fixPluginEntryPoints(
     return;
   }
 
-  const exports = z.record(z.string(), z.string()).parse(packageJson.exports);
+  const exports = z
+    .record(z.string(), z.string())
+    .safeParse(packageJson.exports);
 
   if (!exports.success) {
     throw new Error(
@@ -461,7 +463,7 @@ export function fixPluginEntryPoints(
   }
 
   const { role } = packageJson.backstage;
-  const exportMetadata = getExportsMetadata(project, role, dir, exports);
+  const exportMetadata = getExportsMetadata(project, role, dir, exports.data);
 
   if (exportMetadata.length) {
     packageJson.backstage.exports = exportMetadata;
