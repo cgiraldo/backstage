@@ -49,7 +49,7 @@ export type BackstagePackageExportType = z.infer<
 >;
 
 /**
- *
+ * Metadata relating to an exported Backstage system component
  */
 export type BackstagePackageExport = {
   // The export path, if omitted then it is the default package export
@@ -58,27 +58,6 @@ export type BackstagePackageExport = {
   name?: string;
   // The type of the export
   type: BackstagePackageExportType;
-
-  // more information related to the export
-  /**
-   * Guide
-   * 
-   *  type: 'plugin' | ...
-      pluginId: string
-      entryPoint?: string
-      routes: string[]
-      externalRoutes: string[]
-      extensions: Array<{
-        id: string
-        attachTo: { id: string, input: string }
-        disabled: boolean
-        config: {
-          schema: JsonObject
-        }
-        inputs: Record<string, ...>
-        output: string[]
-      }>
-   */
 };
 
 /**
@@ -122,7 +101,7 @@ export interface BackstagePackageJson {
     pluginPackages?: string[];
 
     /**
-     * TODO
+     * The Backstage system components exported from this package
      */
     exports?: BackstagePackageExport[];
   };

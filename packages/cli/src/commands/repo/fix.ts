@@ -431,7 +431,7 @@ export function fixPluginPackages(
 }
 
 // For each of the defined export locations, we want to annotate
-// the backstage field with the exports that are available. The
+// the backstage field with the exported system components. The
 // "exports" field in package.json is a mapping of import paths to file paths.
 //
 // While the exports field is really flexible, this function will enforce a
@@ -452,19 +452,16 @@ export function fixPluginEntryPoints(
     return;
   }
 
-  const exports = z
-    .record(z.string(), z.string())
-    .safeParse(packageJson.exports);
+  const exports = z.record(z.string(), z.string()).parse(packageJson.exports);
 
   if (!exports.success) {
-    console.log(
+    throw new Error(
       `The exports field in ${packageJson.name} is not in the expected format of Record<string, string>. Skipping.`,
     );
-    return;
   }
 
   const { role } = packageJson.backstage;
-  const exportMetadata = getExportsMetadata(project, role, dir, exports.data);
+  const exportMetadata = getExportsMetadata(project, role, dir, exports);
 
   if (exportMetadata.length) {
     packageJson.backstage.exports = exportMetadata;
