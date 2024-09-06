@@ -4,7 +4,18 @@
   "backstage": {
     "role": "backend-plugin-module",
     "pluginId": "events",
-    "pluginPackage": "@backstage/plugin-events-backend"
+    "pluginPackage": "@backstage/plugin-events-backend",
+    "exports": [
+      {
+        "type": "@backstage/BackendFeature",
+        "name": "eventsModuleAzureDevOpsEventRouter",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackendFeature",
+        "path": "./alpha"
+      }
+    ]
   },
   "publishConfig": {
     "access": "public"

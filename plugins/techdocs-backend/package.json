@@ -11,6 +11,28 @@
       "@backstage/plugin-techdocs-common",
       "@backstage/plugin-techdocs-node",
       "@backstage/plugin-techdocs-react"
+    ],
+    "exports": [
+      {
+        "type": "@backstage/ExtensionPoint",
+        "name": "techdocsBuildsExtensionPoint"
+      },
+      {
+        "type": "@backstage/ExtensionPoint",
+        "name": "techdocsGeneratorExtensionPoint"
+      },
+      {
+        "type": "@backstage/ExtensionPoint",
+        "name": "techdocsPreparerExtensionPoint"
+      },
+      {
+        "type": "@backstage/ExtensionPoint",
+        "name": "techdocsPublisherExtensionPoint"
+      },
+      {
+        "type": "@backstage/BackendFeature",
+        "path": "./alpha"
+      }
     ]
   },
   "publishConfig": {

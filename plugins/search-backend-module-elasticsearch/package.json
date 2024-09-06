@@ -5,7 +5,18 @@
   "backstage": {
     "role": "backend-plugin-module",
     "pluginId": "search",
-    "pluginPackage": "@backstage/plugin-search-backend"
+    "pluginPackage": "@backstage/plugin-search-backend",
+    "exports": [
+      {
+        "type": "@backstage/ExtensionPoint",
+        "name": "elasticsearchTranslatorExtensionPoint",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackendFeature",
+        "path": "./alpha"
+      }
+    ]
   },
   "publishConfig": {
     "access": "public"

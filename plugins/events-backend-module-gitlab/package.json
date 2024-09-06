@@ -4,7 +4,19 @@
   "backstage": {
     "role": "backend-plugin-module",
     "pluginId": "events",
-    "pluginPackage": "@backstage/plugin-events-backend"
+    "pluginPackage": "@backstage/plugin-events-backend",
+    "exports": [
+      {
+        "type": "@backstage/BackendFeature",
+        "name": "eventsModuleGitlabEventRouter",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackendFeature",
+        "name": "eventsModuleGitlabWebhook",
+        "path": "./alpha"
+      }
+    ]
   },
   "publishConfig": {
     "access": "public"

@@ -11,6 +11,17 @@
       "@backstage/plugin-techdocs-common",
       "@backstage/plugin-techdocs-node",
       "@backstage/plugin-techdocs-react"
+    ],
+    "exports": [
+      {
+        "type": "@backstage/ExtensionDefinition",
+        "name": "techDocsSearchResultListItemExtension",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackstagePlugin",
+        "path": "./alpha"
+      }
     ]
   },
   "publishConfig": {

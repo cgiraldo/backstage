@@ -6,6 +6,12 @@
     "pluginId": "catalog-graph",
     "pluginPackages": [
       "@backstage/plugin-catalog-graph"
+    ],
+    "exports": [
+      {
+        "type": "@backstage/BackstagePlugin",
+        "path": "./alpha"
+      }
     ]
   },
   "publishConfig": {

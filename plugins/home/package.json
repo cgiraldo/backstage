@@ -8,6 +8,17 @@
     "pluginPackages": [
       "@backstage/plugin-home",
       "@backstage/plugin-home-react"
+    ],
+    "exports": [
+      {
+        "type": "@backstage/ExtensionDataRef",
+        "name": "titleExtensionDataRef",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackstagePlugin",
+        "path": "./alpha"
+      }
     ]
   },
   "publishConfig": {

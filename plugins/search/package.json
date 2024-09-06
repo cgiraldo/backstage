@@ -11,6 +11,27 @@
       "@backstage/plugin-search-backend-node",
       "@backstage/plugin-search-common",
       "@backstage/plugin-search-react"
+    ],
+    "exports": [
+      {
+        "type": "@backstage/ExtensionDefinition",
+        "name": "searchApi",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/ExtensionDefinition",
+        "name": "searchPage",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/ExtensionDefinition",
+        "name": "searchNavItem",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackstagePlugin",
+        "path": "./alpha"
+      }
     ]
   },
   "publishConfig": {

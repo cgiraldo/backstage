@@ -9,6 +9,22 @@
       "@backstage/plugin-user-settings",
       "@backstage/plugin-user-settings-backend",
       "@backstage/plugin-user-settings-common"
+    ],
+    "exports": [
+      {
+        "type": "@backstage/ExtensionDefinition",
+        "name": "settingsNavItem",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/BackstagePlugin",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/TranslationRef",
+        "name": "userSettingsTranslationRef",
+        "path": "./alpha"
+      }
     ]
   },
   "publishConfig": {

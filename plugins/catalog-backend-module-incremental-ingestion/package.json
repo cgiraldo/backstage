@@ -5,7 +5,18 @@
   "backstage": {
     "role": "backend-plugin-module",
     "pluginId": "catalog",
-    "pluginPackage": "@backstage/plugin-catalog-backend"
+    "pluginPackage": "@backstage/plugin-catalog-backend",
+    "exports": [
+      {
+        "type": "@backstage/BackendFeature",
+        "path": "./alpha"
+      },
+      {
+        "type": "@backstage/ExtensionPoint",
+        "name": "incrementalIngestionProvidersExtensionPoint",
+        "path": "./alpha"
+      }
+    ]
   },
   "publishConfig": {
     "access": "public"
