@@ -438,10 +438,12 @@ export function fixPluginPackages(
 // particular structure, which is a Record<string, string> where the key is the
 // import path and the value is the file path.
 export function fixPluginEntryPoints(
-  { dir, packageJson }: FixablePackage,
+  pkg: FixablePackage,
   _packages: FixablePackage[],
   project: Project,
 ) {
+  const { dir, packageJson } = pkg;
+
   if (
     !packageJson.backstage ||
     !packageJson.backstage.role ||
@@ -466,6 +468,7 @@ export function fixPluginEntryPoints(
 
   if (exportMetadata.length) {
     packageJson.backstage.exports = exportMetadata;
+    pkg.changed = true;
   }
 }
 
