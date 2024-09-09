@@ -206,10 +206,10 @@ export const scaffolderTranslationRef: TranslationRef<
     readonly 'templateEditorPage.dryRunResultsView.tab.log': 'Log';
     readonly 'templateEditorPage.dryRunResultsView.tab.files': 'Files';
     readonly 'templateEditorPage.taskStatusStepper.skippedStepTitle': 'Skipped';
-    readonly 'templateEditorPage.customFieldExplorer.selectFieldLabel': 'Choose Custom Field Extension';
+    readonly 'templateEditorPage.customFieldExplorer.preview.title': 'Example Template Spec';
     readonly 'templateEditorPage.customFieldExplorer.fieldForm.title': 'Field Options';
     readonly 'templateEditorPage.customFieldExplorer.fieldForm.applyButtonTitle': 'Apply';
-    readonly 'templateEditorPage.customFieldExplorer.preview.title': 'Example Template Spec';
+    readonly 'templateEditorPage.customFieldExplorer.selectFieldLabel': 'Choose Custom Field Extension';
     readonly 'templateEditorPage.templateEditorBrowser.closeConfirmMessage': 'Are you sure? Unsaved changes will be lost';
     readonly 'templateEditorPage.templateEditorBrowser.saveIconTooltip': 'Save all files';
     readonly 'templateEditorPage.templateEditorBrowser.reloadIconTooltip': 'Reload directory';
