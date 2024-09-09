@@ -1,5 +1,19 @@
 # @backstage/plugin-search-react
 
+## 1.8.0-next.2
+
+### Patch Changes
+
+- dbbd93e: Internal update to match recent React types
+- Updated dependencies
+  - @backstage/core-components@0.14.11-next.1
+  - @backstage/frontend-plugin-api@0.8.0-next.2
+  - @backstage/core-plugin-api@1.9.3
+  - @backstage/theme@0.5.6
+  - @backstage/types@1.1.1
+  - @backstage/version-bridge@1.0.8
+  - @backstage/plugin-search-common@1.2.14
+
 ## 1.8.0-next.1
 
 ### Patch Changes

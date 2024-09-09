@@ -1,5 +1,37 @@
 # @backstage/plugin-auth-backend
 
+## 0.23.0-next.2
+
+### Patch Changes
+
+- 92118cd: Updated dependency `@node-saml/passport-saml` to `^5.0.0`.
+- c2b63ab: Updated dependency `supertest` to `^7.0.0`.
+- Updated dependencies
+  - @backstage/backend-common@0.25.0-next.2
+  - @backstage/plugin-auth-backend-module-atlassian-provider@0.3.0-next.2
+  - @backstage/plugin-auth-backend-module-bitbucket-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-github-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-gitlab-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-google-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-microsoft-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-oauth2-provider@0.3.0-next.2
+  - @backstage/plugin-auth-backend-module-oidc-provider@0.3.0-next.2
+  - @backstage/plugin-auth-backend-module-okta-provider@0.1.0-next.2
+  - @backstage/plugin-auth-backend-module-onelogin-provider@0.2.0-next.2
+  - @backstage/plugin-auth-node@0.5.2-next.2
+  - @backstage/backend-plugin-api@0.9.0-next.2
+  - @backstage/catalog-client@1.6.7-next.0
+  - @backstage/catalog-model@1.6.0
+  - @backstage/config@1.2.0
+  - @backstage/errors@1.2.4
+  - @backstage/types@1.1.1
+  - @backstage/plugin-auth-backend-module-aws-alb-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-azure-easyauth-provider@0.2.0-next.2
+  - @backstage/plugin-auth-backend-module-cloudflare-access-provider@0.3.0-next.2
+  - @backstage/plugin-auth-backend-module-gcp-iap-provider@0.3.0-next.2
+  - @backstage/plugin-auth-backend-module-oauth2-proxy-provider@0.2.0-next.2
+  - @backstage/plugin-catalog-node@1.12.7-next.2
+
 ## 0.23.0-next.1
 
 ### Patch Changes
